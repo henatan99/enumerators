@@ -1,7 +1,7 @@
 module Enumerable
     def my_each
         n = self.length
-        (n-1).times do |i|
+        n.times do |i|
         self[i] = yield(self[i])
         end
         self
@@ -54,6 +54,21 @@ module Enumerable
             end
         end
         count
+    end
+    def my_map
+        arr = []
+        n = self.length
+        n.times do |i|
+        arr << yield(self[i])
+        end
+        arr
+    end
+    def my_inject
+        n = self.length
+        n.times do |i|
+        memo = yield(memo,self[i])
+        end
+        memo
     end
 end
 a = [1,2,3,4]
