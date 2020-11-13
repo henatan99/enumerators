@@ -85,8 +85,8 @@ ruby main.rb
 - Twitter: [@IKineza](https://twitter.com/IKineza)
 - LinkedIn: [Iris Enaelle Kineza](https://www.linkedin.com/in/iris-enaelle-kineza-25a676187/)
 
-  :bust_in_silhouette: **Henok Mossissa**
-  
+:bust_in_silhouette: **Henok Mossissa**
+
 - GitHub: [@henatan99](https://github.com/henatan99)
 - Twitter: [@henatan99](https://twitter.com/henatan99)
 - LinkedIn: [Henok Mossissa](https://www.linkedin.com/in/henok-mekonnen-2a251613/)
