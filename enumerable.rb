@@ -129,3 +129,6 @@ module Enumerable
     memo
   end
 end
+# rubocop: enable Metrics/ModuleLength
+# rubocop: enable Metrics/MethodLength
+# rubocop: enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
