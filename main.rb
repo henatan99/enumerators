@@ -32,9 +32,9 @@ module Enumerable
         return false if yield(elem) == false
       end
 
-    else
+    elsif !pattern.nil?
       my_each do |elem|
-        return false unless elem.is_a?(pattern) || pattern.to_s.match?(elem.to_s) || (pattern.nil? && elem.nil?)
+        return false unless (pattern == elem) || (pattern.is_a?(Class) && elem.is_a?(pattern)) || (pattern.is_a?(Regexp) && pattern.match?(elem.to_s))
       end
     end
     true
@@ -45,39 +45,47 @@ module Enumerable
       my_each do |elem|
         return true if yield(elem) == true
       end
-    else
+    elsif !pattern.nil?
       my_each do |elem|
-        return true if elem.is_a?(pattern) || pattern.to_s.match?(elem.to_s) || (pattern.nil? && elem.nil?)
+        return true if (pattern == elem) || (pattern.is_a?(Class) && elem.is_a?(pattern)) || (pattern.is_a?(Regexp) && pattern.match?(elem.to_s))
       end
     end
     false
   end
 
   def my_none?(pattern = nil)
+    if !block_given? && pattern.nil?
+      my_each do |elem|
+        return false if !elem.nil? && elem != false
+      end
+      true
+    end
+
     if block_given?
       my_each do |elem|
         return false if yield(elem) == true
       end
-    else
+    elsif !pattern.nil?
       my_each do |elem|
-        return false if elem.is_a?(pattern) || pattern.to_s.match?(elem.to_s) || (pattern.nil? && elem.nil?)
+        return false if (pattern == elem) || (pattern.is_a?(Class) && elem.is_a?(pattern)) || (pattern.is_a?(Regexp) && pattern.match?(elem.to_s))
       end
     end
     true
   end
 
   def my_count(obj = nil)
-    count = 0
+    count_item = size
     if block_given?
       my_each do |elem|
-        count += 1 if yield(elem) == true
-      end      
-    else
+        count_item += 1 if yield(elem) == true
+      end
+    elsif !obj.nil?
+      count_item = 0
       my_each do |elem|
-        count += 1 if elem == obj
-      end      
+        count_item += 1 if elem == obj
+      end
     end
-    count 
+    count_item
   end
 
   def my_map(proc = nil)
@@ -93,40 +101,47 @@ module Enumerable
     return to_enum(:my_each) unless block_given?
 
     n.times do |i|
-      arr << yield(self[i])
+      arr[i] = yield(self[i])
     end
     arr
   end
 
   def my_inject(*arg)
-    n = length
+    arr = to_a
+    n = arr.size
 
-    if !arg.empty? && arg.any?.is_a?(Symbol)
+    if !arg.empty? && !block_given?
       if arg.size == 2
         memo = arg[0]
-        sym = arg[1]
+        sym = arg[1].to_sym
+        n.times do |i|
+          memo = memo.send(sym, arr[i])
+        end
       else
-        memo = self[0]
+        memo = arr[0]
         sym = arg[0]
+        (n - 1).times do |i|
+          memo = memo.send(sym, arr[i + 1])
+        end
       end
 
-      n.times do |i|
-        memo = memo.send(sym, self[i])
-      end
       return memo
     end
 
     return to_enum(:my_each) unless block_given?
 
-    memo = if arg.size == 1
-             arg[0]
-           else
-             self[i]
-           end
-
-    n.times do |i|
-      memo = yield(memo, self[i])
+    if arg.size == 1
+      memo = arg[0]
+      n.times do |i|
+        memo = yield(memo, arr[i])
+      end
+    else
+      memo = arr[0]
+      (n - 1).times do |i|
+        memo = yield(memo, arr[i + 1])
+      end
     end
     memo
   end
+  
 end
