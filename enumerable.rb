@@ -1,4 +1,8 @@
 # rubocop:disable Layout/LineLength
+# rubocop:disable Metrics/PerceivedComplexity
+# rubocop:disable Metrics/CyclomaticComplexity
+# rubocop:disable  Metrics/MethodLength
+# rubocop:disable  Metrics/ModuleLength
 module Enumerable
   def my_each
     return to_enum(:my_each) unless block_given?
@@ -147,3 +151,8 @@ module Enumerable
     memo
   end
 end
+# rubocop:enable Layout/LineLength
+# rubocop:enable Metrics/PerceivedComplexity
+# rubocop:enable Metrics/CyclomaticComplexity
+# rubocop:enable  Metrics/MethodLength
+# rubocop:enable  Metrics/ModuleLength
