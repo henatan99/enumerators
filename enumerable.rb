@@ -55,9 +55,9 @@ module Enumerable
   end
 
   def my_any?(pattern = nil)
-    unless block_given?
+    unless block_given? || !pattern.nil?
       my_each do |elem|
-        return true if elem == false || elem.nil?
+        return true if elem != false && !elem.nil?
       end
     end
     if block_given?
