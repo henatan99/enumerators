@@ -138,7 +138,7 @@ module Enumerable
     end
 
     return to_enum(:my_each) unless block_given?
-    
+
     if arg.size == 1
       memo = arg[0]
       n.times do |i|
