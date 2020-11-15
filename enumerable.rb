@@ -6,6 +6,7 @@
 module Enumerable
   def my_each
     return to_enum(:my_each) unless block_given?
+
     arr = *to_a
     n = arr.length
     n.times do |i|
@@ -16,6 +17,7 @@ module Enumerable
 
   def my_each_with_index
     return to_enum(:my_each) unless block_given?
+
     n = to_a.length
     n.times do |index|
       yield(self[index], index)
@@ -25,6 +27,7 @@ module Enumerable
 
   def my_select
     return to_enum(:my_each) unless block_given?
+
     arr = []
     my_each do |elem|
       arr << elem if yield(elem) == true
@@ -107,6 +110,7 @@ module Enumerable
       return arr
     end
     return to_enum(:my_each) unless block_given?
+
     n.times do |i|
       arr[i] = yield(self[i])
     end
@@ -134,6 +138,7 @@ module Enumerable
     end
 
     return to_enum(:my_each) unless block_given?
+    
     if arg.size == 1
       memo = arg[0]
       n.times do |i|
