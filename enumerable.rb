@@ -18,9 +18,10 @@ module Enumerable
   def my_each_with_index
     return to_enum(:my_each) unless block_given?
 
-    n = to_a.length
+    arr = *to_a
+    n = arr.length
     n.times do |index|
-      yield(self[index], index)
+      yield(arr[index], index)
     end
     self
   end
@@ -54,6 +55,11 @@ module Enumerable
   end
 
   def my_any?(pattern = nil)
+    unless block_given?
+      my_each do |elem|
+        return true if elem == false || elem.nil?
+      end
+    end
     if block_given?
       my_each do |elem|
         return true if yield(elem) == true
@@ -88,6 +94,7 @@ module Enumerable
   def my_count(obj = nil)
     count_item = size
     if block_given?
+      count_item = 0
       my_each do |elem|
         count_item += 1 if yield(elem) == true
       end
@@ -101,7 +108,7 @@ module Enumerable
   end
 
   def my_map(proc = nil)
-    arr = *self
+    arr = *to_a
     n = arr.length
     unless proc.nil?
       n.times do |i|
@@ -112,12 +119,14 @@ module Enumerable
     return to_enum(:my_each) unless block_given?
 
     n.times do |i|
-      arr[i] = yield(self[i])
+      arr[i] = yield(arr[i])
     end
     arr
   end
 
   def my_inject(*arg)
+    raise LocalJumpError if !block_given? && arg.empty?
+
     arr = to_a
     n = arr.size
     if !arg.empty? && !block_given?
@@ -153,7 +162,6 @@ module Enumerable
     memo
   end
 end
-
 # rubocop:enable Layout/LineLength
 # rubocop:enable Metrics/PerceivedComplexity
 # rubocop:enable Metrics/CyclomaticComplexity
