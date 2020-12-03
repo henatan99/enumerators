@@ -3,7 +3,7 @@ require './enumerable' #=> add this
 
 describe Enumerable do
   describe 'my_each' do
-    let(:arr) {Array.new}
+    let(:arr) { [] }
     it 'returns a new array by incrementing each element of the given array by 1' do
       [1, 2, 3].my_each { |item| arr << item + 1 }
       expect(arr). to eql([2, 3, 4])
@@ -12,7 +12,7 @@ describe Enumerable do
 
   describe 'my_each_with_index' do
     it 'returns a Hash element from given list of string elements and block argument of hash item and index' do
-      hash = Hash.new
+      hash = {}
       expect(%w[cat dog wombat].my_each_with_index do |item, index|
         hash[item] = index
       end).to eql(%w[cat dog wombat])
