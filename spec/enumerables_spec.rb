@@ -4,20 +4,19 @@ require './enumerable' #=> add this
 describe Enumerable do
   describe 'my_each' do
     let(:arr) { [] }
-    context "when block applies to new array" do 
+    context 'when block applies to new array' do
       it 'returns a the elements of the new array' do
         [1, 2, 3].my_each { |item| arr << item + 1 }
         expect(arr).to eql([2, 3, 4])
       end
-    end 
-    
+    end
+
     it 'does not return the new elements' do
       expect([1, 2, 3].my_each { |item| arr << item + 1 }).not_to eql([1, 3, 5])
     end
-    it "does not return an array when block is not given" do
+    it 'does not return an array when block is not given' do
       expect([1, 2, 3].my_each).not_to eql([1, 2, 3])
-    end    
-
+    end
   end
 
   describe 'my_each_with_index' do
@@ -31,18 +30,17 @@ describe Enumerable do
       arr = []
       [1, 2, 3].my_each_with_index do |item, index|
         arr << item + index
-      end      
+      end
       expect(arr).to eql([1, 3, 5])
     end
 
-    it "returns enumerator when no block is given" do
-      expect([1,2,3].my_each_with_index).to be_kind_of(Enumerable)
-    end 
+    it 'returns enumerator when no block is given' do
+      expect([1, 2, 3].my_each_with_index).to be_kind_of(Enumerable)
+    end
 
-    it "does not return array when block is not given" do 
-      expect([1,2,3].each).not_to eql([1, 2, 3])
-    end 
-
+    it 'does not return array when block is not given' do
+      expect([1, 2, 3].each).not_to eql([1, 2, 3])
+    end
   end
 
   describe 'my_select' do
@@ -62,9 +60,9 @@ describe Enumerable do
       expect(%i[foo bar].my_select { |x| x == :foo }).to eql([:foo])
     end
 
-    it "doesn't return array when no blcok is given" do 
+    it "doesn't return array when no blcok is given" do
       expect([1, 2, 3].select).not_to be_kind_of(Array)
-    end 
+    end
   end
 
   describe 'my_all?' do
@@ -93,7 +91,7 @@ describe Enumerable do
 
     it "doesn't return false value in array with no false or nil element when no argument is given" do
       expect([1, 2, true, 'rat'].my_all?).not_to eql(false)
-    end 
+    end
   end
 
   describe 'my_any?' do
@@ -116,10 +114,9 @@ describe Enumerable do
       expect([].my_any?).to eql(false)
     end
 
-    it "doesn't return false if there is any element other than false or nil" do 
+    it "doesn't return false if there is any element other than false or nil" do
       expect([1, false, nil].any?).not_to eql(false)
-    end 
-
+    end
   end
 
   describe 'my_none?' do
@@ -145,9 +142,9 @@ describe Enumerable do
       expect([nil, false, true].my_none?).to eql(false)
     end
 
-    it "doesn't return true when there is any element other than false or nil when block not given" do 
+    it "doesn't return true when there is any element other than false or nil when block not given" do
       expect([nil, false, 1].none?).not_to eql(true)
-    end 
+    end
   end
 
   describe 'my_count' do
@@ -162,10 +159,9 @@ describe Enumerable do
       expect(ary.my_count(&:even?)).to eql(3)
     end
 
-    it "ignores block if argument and block are given" do
-      expect([1, 2, 3, 4, 5].my_count(3) {|item| item > 3}).not_to eql(2)
-    end 
-
+    it 'ignores block if argument and block are given' do
+      expect([1, 2, 3, 4, 5].my_count(3) { |item| item > 3 }).not_to eql(2)
+    end
   end
 
   describe 'my_map' do
@@ -175,7 +171,7 @@ describe Enumerable do
     it 'returns a new array of repeated strings with size of the given range object' do
       expect((1..4).my_map { 'cat' }).to eql(%w[cat cat cat cat])
     end
-    it "doesn't return an array if block not given" do 
+    it "doesn't return an array if block not given" do
       expect([1, 2, 3].my_map).not_to eql([1, 2, 3])
     end
   end
@@ -206,9 +202,8 @@ describe Enumerable do
       expect { [1, 2, 3].my_inject(4, 3) }.to raise_error(NoMethodError)
     end
 
-    it " ignores block when both argument and bloack are given" do
-      expect([1, 2, 3].inject(4, :+) {|memo, item| memo * item})
-    end 
-
+    it ' ignores block when both argument and bloack are given' do
+      expect([1, 2, 3].inject(4, :+) { |memo, item| memo * item })
+    end
   end
 end
