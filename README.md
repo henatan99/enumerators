@@ -61,12 +61,15 @@ cd enumerators-
 ```
 
 Lastly run either of the commands listed in the getting started section above.
+
 **Run the code demonstrations below**
 
 ```bash
 ruby enumerable.rb
 ```
+
 ## Running tests 
+
 To run tests plases make sure rspec is installed in your machine. 
 
 ![screenshot](assets/rspec.png)
