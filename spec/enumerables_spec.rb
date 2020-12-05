@@ -4,9 +4,15 @@ require './enumerable' #=> add this
 describe Enumerable do
   describe 'my_each' do
     let(:arr) { [] }
-    it 'returns a new array by incrementing each element of the given array by 1' do
-      [1, 2, 3].my_each { |item| arr << item + 1 }
-      expect(arr).to eql([2, 3, 4])
+    context "when block applies to new array" do 
+      it 'returns a the elements of the new array' do
+        [1, 2, 3].my_each { |item| arr << item + 1 }
+        expect(arr).to eql([2, 3, 4])
+      end
+    end 
+    
+    it 'does not return the new elements' do
+      expect([1, 2, 3].my_each { |item| arr << item + 1 }).not_to eql([1, 3, 5])
     end
     it "does not return an array when block is not given" do
       expect([1, 2, 3].my_each).not_to eql([1, 2, 3])
@@ -29,9 +35,14 @@ describe Enumerable do
       expect(arr).to eql([1, 3, 5])
     end
 
-    it "returns " do
-      expect([1,2,3].each).to be_kind_of(Enumerable)
+    it "returns enumerator when no block is given" do
+      expect([1,2,3].my_each_with_index).to be_kind_of(Enumerable)
     end 
+
+    it "does not return array when block is not given" do 
+      expect([1,2,3].each).not_to eql([1, 2, 3])
+    end 
+
   end
 
   describe 'my_select' do
@@ -51,6 +62,9 @@ describe Enumerable do
       expect(%i[foo bar].my_select { |x| x == :foo }).to eql([:foo])
     end
 
+    it "doesn't return array when no blcok is given" do 
+      expect([1, 2, 3].select).not_to be_kind_of(Array)
+    end 
   end
 
   describe 'my_all?' do
@@ -77,8 +91,8 @@ describe Enumerable do
       expect([].my_all?). to eql(true)
     end
 
-    it "returns no false value in array when no argument is given" do
-      expect([1, 2, 3].my_all?).not_to eql(false)
+    it "doesn't return false value in array with no false or nil element when no argument is given" do
+      expect([1, 2, true, 'rat'].my_all?).not_to eql(false)
     end 
   end
 
@@ -101,6 +115,11 @@ describe Enumerable do
     it 'returns false if array is empty' do
       expect([].my_any?).to eql(false)
     end
+
+    it "doesn't return false if there is any element other than false or nil" do 
+      expect([1, false, nil].any?).not_to eql(false)
+    end 
+
   end
 
   describe 'my_none?' do
@@ -125,6 +144,10 @@ describe Enumerable do
     it 'returns false when no method argument is passed and array has any element other than nil and false' do
       expect([nil, false, true].my_none?).to eql(false)
     end
+
+    it "doesn't return true when there is any element other than false or nil when block not given" do 
+      expect([nil, false, 1].none?).not_to eql(true)
+    end 
   end
 
   describe 'my_count' do
@@ -138,6 +161,11 @@ describe Enumerable do
     it 'returns integer counting the number of elements in an array which  satisfies block argument' do
       expect(ary.my_count(&:even?)).to eql(3)
     end
+
+    it "ignores block if argument and block are given" do
+      expect([1, 2, 3, 4, 5].my_count(3) {|item| item > 3}).not_to eql(2)
+    end 
+
   end
 
   describe 'my_map' do
@@ -146,6 +174,9 @@ describe Enumerable do
     end
     it 'returns a new array of repeated strings with size of the given range object' do
       expect((1..4).my_map { 'cat' }).to eql(%w[cat cat cat cat])
+    end
+    it "doesn't return an array if block not given" do 
+      expect([1, 2, 3].my_map).not_to eql([1, 2, 3])
     end
   end
 
@@ -171,8 +202,13 @@ describe Enumerable do
       expect { [1, 2, 3].my_inject }.to raise_error(LocalJumpError)
     end
 
-    it 'raises Nomethod if wrong kind of argument given in' do
+    it 'raises Nomethod if operator symbol is not given' do
       expect { [1, 2, 3].my_inject(4, 3) }.to raise_error(NoMethodError)
     end
+
+    it " ignores block when both argument and bloack are given" do
+      expect([1, 2, 3].inject(4, :+) {|memo, item| memo * item})
+    end 
+
   end
 end
