@@ -6,8 +6,12 @@ describe Enumerable do
     let(:arr) { [] }
     it 'returns a new array by incrementing each element of the given array by 1' do
       [1, 2, 3].my_each { |item| arr << item + 1 }
-      expect(arr). to eql([2, 3, 4])
+      expect(arr).to eql([2, 3, 4])
     end
+    it "does not return an array when block is not given" do
+      expect([1, 2, 3].my_each).not_to eql([1, 2, 3])
+    end    
+
   end
 
   describe 'my_each_with_index' do
@@ -19,10 +23,15 @@ describe Enumerable do
     end
     it 'returns the new array of numeric elements by applying block definition to the item and index arguments' do
       arr = []
-      expect([1, 2, 3].my_each_with_index do |item, index|
+      [1, 2, 3].my_each_with_index do |item, index|
         arr << item + index
-      end).to eql([1, 2, 3])
+      end      
+      expect(arr).to eql([1, 3, 5])
     end
+
+    it "returns " do
+      expect([1,2,3].each).to be_kind_of(Enumerable)
+    end 
   end
 
   describe 'my_select' do
@@ -41,6 +50,7 @@ describe Enumerable do
     it 'returns a new array of symbols which satisfies a block argument from an array of symbol elements' do
       expect(%i[foo bar].my_select { |x| x == :foo }).to eql([:foo])
     end
+
   end
 
   describe 'my_all?' do
@@ -66,6 +76,10 @@ describe Enumerable do
     it 'returns true when argument is not given and array is empty' do
       expect([].my_all?). to eql(true)
     end
+
+    it "returns no false value in array when no argument is given" do
+      expect([1, 2, 3].my_all?).not_to eql(false)
+    end 
   end
 
   describe 'my_any?' do
@@ -152,6 +166,13 @@ describe Enumerable do
       expect(%w[cat sheep bear].my_inject do |memo, word|
                memo.length > word.length ? memo : word
              end).to eql('sheep')
+    end
+    it 'raises LocalJumpError if no block given' do
+      expect { [1, 2, 3].my_inject }.to raise_error(LocalJumpError)
+    end
+
+    it 'raises Nomethod if wrong kind of argument given in' do
+      expect { [1, 2, 3].my_inject(4, 3) }.to raise_error(NoMethodError)
     end
   end
 end
