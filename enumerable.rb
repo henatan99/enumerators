@@ -93,12 +93,14 @@ module Enumerable
 
   def my_count(obj = nil)
     count_item = size
+
     if block_given?
       count_item = 0
       my_each do |elem|
         count_item += 1 if yield(elem) == true
       end
-    elsif !obj.nil?
+    end
+    unless obj.nil?
       count_item = 0
       my_each do |elem|
         count_item += 1 if elem == obj
