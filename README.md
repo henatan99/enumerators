@@ -4,7 +4,7 @@
 
 This project implements different custom enumerator methods: 
 - my_each, my_each_with_index, my_selct, my_all?, my_any?, my_none?, my_count, my_map, my_inject.
-Each method is expected to behave exactly like the equivalent built in method in Enumerables module
+Each method is expected to behave exactly like the equivalent built-in method in the Enumerable module
 
 
 ## Description 
@@ -12,28 +12,28 @@ Each method is expected to behave exactly like the equivalent built in method in
 - This method accepts a block and iterates through each element and do the block operation to each element
 
 ### my_each_with_index
-- This method varies from the 'my_each' method in that it takes the index of the list or array elements as block argument in addition to the element value
+- This method varies from the 'my_each' method in that it takes the index of the list or array elements as a block argument in addition to the element value
 
 ### my_selct
-- This method iterates through an array or list and selects those elements which statisfies the given block condition and outputs a new array
+- This method iterates through an array or list and selects those elements which satisfies the given block condition and output a new array
 
 ### my_all?
-- This method iterates through all the elements of a list or an array and checks if all satisfy teh given condition. If all statisfies teh given condition it returns true else when it finds an element which doesn't satisfy, it returns false. 
+- This method iterates through all the elements of a list or an array and checks if all satisfy the given condition. If all satisfy the given condition it returns true else when it finds an element that doesn't satisfy, it returns false. 
 
 ### my_any?
-- This method iterates through all the elements of a list or an array and checks until it finds one element whcich satisfies the given condition. If it gets one element that satisfies it returns true, otherwise it returns flase.
+- This method iterates through all the elements of a list or an array and checks until it finds one element which satisfies the given condition. If it gets one element that satisfies it returns true, otherwise it returns false.
 
 ### my_none?
 - This method iterates through all the elements of a list or an array and checks until it finds one element which satisfies the given condition. If it gets one element that satisfies it returns false, otherwise it returns true.
 
 ### my_count
-- This method iterates through all the elements of a list and counts when an element satisfies the given condition. If the element does not satisfy the given condition, it skips to the next element. It retuerns teh final count value.
+- This method iterates through all the elements of a list and counts when an element satisfies the given condition. If the element does not satisfy the given condition, it skips to the next element. It returns the final count value.
 
 ### my_map
-- This method iterates through all the elements of a list and does the block operation to every element, stores the value into new array and returns the new array.
+- This method iterates through all the elements of a list and does the block operation to every element, stores the value into a new array, and returns the new array.
 
 ### my_inject
-- This method iterates through all the elements of a list, accepts the yield value and the element value as arguments and returns the final yield value. 
+- This method iterates through all the elements of a list, accepts the yield value and the element value as arguments, and returns the final yield value. 
 
 ## Built With
 
@@ -60,7 +60,7 @@ After cloning run
 cd enumerators-
 ```
 
-Lastly run either of the commands listed in the getting started section above.
+Lastly, run either of the commands listed in the getting started section above.
 
 **Run the code demonstrations below**
 
@@ -70,7 +70,7 @@ ruby enumerable.rb
 
 ## Running tests 
 
-To run tests plases make sure rspec is installed in your machine. 
+To run the test please make sure RSpec is installed in your machine. 
 
 ![screenshot](assets/rspec.png)
 
